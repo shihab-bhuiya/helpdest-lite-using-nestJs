@@ -1,13 +1,66 @@
-import { Injectable } from '@nestjs/common';
-import { Subject } from 'rxjs';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { NotFoundError, Subject } from 'rxjs';
 import { Ticket } from './ticket.interface.js';
 
 @Injectable()
 export class TicketsService {
-    private readonly tickets: Ticket[] = []
+  private readonly tickets: Ticket[] = [
+    {
+      id: 1,
+      subject: 'Payment failed',
+      description: 'You cannot payment at this moments',
+      priority: 'high',
+      status: 'open',
+      createdAt: '1016-09-01T10:00:00:000Z',
+    },
+    {
+      id: 2,
+      subject: 'History failed',
+      description: 'Card payment failed at the checkout point',
+      priority: 'medium',
+      status: 'open',
+      createdAt: '2016-04-01T02:00:00:000Z',
+    },
+    {
+      id: 3,
+      subject: 'Invoice download is not working',
+      description: 'Invoice download pdf returns a  empty file',
+      priority: 'low',
+      status: 'close',
+      createdAt: '1016-09-01T12:20:00:000Z',
+    },
+  ];
 
-    findAll() {
-        return this.tickets;
+  findAll(status?: Ticket['status'], priority?: Ticket['priority']) {
+    let tickets = this.tickets;
+    if (status) {
+      tickets = tickets.filter((ticket) => status === ticket.status);
     }
 
+    if (priority) {
+      tickets = tickets.filter((ticket) => ticket.priority == priority);
+    }
+
+    return tickets;
+  }
+
+  findOne(id: number) {
+    const ticket = this.tickets.find((ticket) => ticket.id === id);
+    if (!ticket) {
+      throw new NotFoundException(`Ticket with ID ${id} not found`);
+    }
+    return ticket;
+  }
+
+  create(payload: any) {
+    const ticket: Ticket = {
+      id: this.nextTickedId++,
+      subject: payload.subject,
+      description: payload.description,
+      priority: payload.priority,
+      status: 'open',
+      createdAt: new Date().toISOString(),
+    };
+    this.tickets.push(ticket);
+  }
 }

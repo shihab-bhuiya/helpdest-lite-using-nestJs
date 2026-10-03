@@ -1,0 +1,17 @@
+{
+    "editor.formatOnSave": true,
+    "files.autoSave": "afterDelay",
+    "editor.allowVariableFontsInAccessibilityMode": true,
+    "editor.autoIndentOnPaste": true,
+    "editor.codeActions.triggerOnFocusChange": true,
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "chat.checkpoints.showFileChanges": true,
+    "chat.agent.sandbox.enabled": "on",
+    "chat.agent.sandbox.fileSystem.linux": {
+        
+        "denyRead": [],
+        "allowRead": [],
+        "allowWrite": [],
+        "denyWrite": []
+    }
+}
