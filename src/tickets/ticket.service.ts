@@ -1,9 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { NotFoundError, Subject } from 'rxjs';
 import { Ticket } from './ticket.interface.js';
+import { CreateTicketDto } from './dto/create-ticket.dto.js';
 
 @Injectable()
 export class TicketsService {
+  private nextTickedId = 4;
+
   private readonly tickets: Ticket[] = [
     {
       id: 1,
@@ -52,12 +55,12 @@ export class TicketsService {
     return ticket;
   }
 
-  create(payload: any) {
+  create(createTicketDto:CreateTicketDto) {
     const ticket: Ticket = {
       id: this.nextTickedId++,
-      subject: payload.subject,
-      description: payload.description,
-      priority: payload.priority,
+      subject: createTicketDto.subject,
+      description: createTicketDto.description,
+      priority: createTicketDto.priority,
       status: 'open',
       createdAt: new Date().toISOString(),
     };

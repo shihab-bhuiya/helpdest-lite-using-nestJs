@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { TicketsService } from './ticket.service.js';
 import { Ticket } from './ticket.interface.js';
+import { CreateTicketDto } from './dto/create-ticket.dto.js';
+import { FilterTicketsQueryDto } from './dto/filter-tickets-query.dto.js';
 
 @Controller('tickets')
 export class TicketsController {
@@ -8,10 +10,9 @@ export class TicketsController {
 
   @Get()
   findAll(
-    @Query('status') status?: Ticket['status'],
-    @Query('priority') priority?: Ticket['priority']
+    @Query() filter: FilterTicketsQueryDto
   ) {
-    return this.ticketsService.findAll(status, priority);
+    return this.ticketsService.findAll(filter.status, filter.priority);
   }
 
   @Get(':id')
@@ -20,8 +21,8 @@ export class TicketsController {
   }
 
   @Post()
-  create(@Body() payload:any){
-    return this.ticketsService.create(payload);
+  create(@Body() CreateTicketDto:CreateTicketDto){
+    return this.ticketsService.create(CreateTicketDto);
     
   }
 }
