@@ -3,7 +3,7 @@ import { IsIn, IsOptional } from "class-validator";
 export class FilterTicketsQueryDto {
 
     @IsOptional()
-    @IsIn(['opne','close'])
+    @IsIn(['open','close'])
     status:"open" | "close";
 
     @IsOptional()
