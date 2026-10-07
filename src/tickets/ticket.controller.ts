@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { TicketsService } from './ticket.service.js';
-import { Ticket } from './ticket.interface.js';
 import { CreateTicketDto } from './dto/create-ticket.dto.js';
 import { FilterTicketsQueryDto } from './dto/filter-tickets-query.dto.js';
 import { UpdateTicketDto } from './dto/update-ticket.dto.js';
