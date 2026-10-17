@@ -20,6 +20,7 @@ export class TicketsController {
     return this.ticketsService.findOne(id);
   }
 
+  // POST
   @Post()
   create(@Body() CreateTicketDto:CreateTicketDto){
     return this.ticketsService.create(CreateTicketDto);
